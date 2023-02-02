@@ -1,24 +1,23 @@
-version: '3' # versão do docker compose usado 
+version: "3" # versão do docker compose usado
 services:
-  mondodb: #serviços que irão ser rodados [container name]
-    image: mongo ## a partir de qual imagem o continer vai ser montado
-    ports: 
-      - 27017:27017
-    environment: # variavéis usadas no container
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
-  mongo-express:
-    image: mongo-express
-    #restart: always # fixes MongoNetworkError when mongodb is not ready when mongo-express starts
-    ports:
-      - 8081:8081
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
-      - ME_CONFIG_MONGODB_SERVER=mongo-db
-
-
-
+   mongodb: #serviços que irão ser rodados [container name]
+      image: mongo ## a partir de qual imagem o continer vai ser montado
+      ports:
+         - 27017:27017
+      environment: # variavéis usadas no container
+         - MONGO_INITDB_ROOT_USERNAME=admin
+         - MONGO_INITDB_ROOT_PASSWORD=password
+   mongo-express:
+      image: mongo-express
+      #restart: always # fixes MongoNetworkError when mongodb is not ready when mongo-express starts
+      ports:
+         - 8081:8081
+      depends_on:
+         - mongodb
+      environment:
+         - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+         - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+         - ME_CONFIG_MONGODB_SERVER=mongo-db
 # feito em .yaml
 # Forma de estrurar comandos docker num arquivo para facilitar  a montagem dos container
 # a network para comunicação de container é criada automaticamente
